@@ -9,8 +9,8 @@ So that I can organize and plan my business
 ## Technologies Used: 
 Javascript, Node.js, NPM Packages (Inquirer, MySql, Console Table) 
 
-## Click on image for video demo
-[![Watch the video](https://img.youtube.com/vi/Xqiip6fwh5I/maxresdefault.jpg)](https://youtu.be/Xqiip6fwh5I)
+## Screenshot
+[![screenshot](./Assets/employee-tracker.gif)
 
 ## Table of Contents:
 * [1. Installation](#installation)
