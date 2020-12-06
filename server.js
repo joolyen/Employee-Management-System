@@ -146,7 +146,7 @@ function AddDepartment() {
 
 
 function AddPosition() {
-    let query = "SELECT name FROM t.departdbnt";
+    let query = "SELECT name FROM employeetracker_db.department";
     connection.query(query, function (err, res) {
         if (err) throw err;
         let deptArray = [];
