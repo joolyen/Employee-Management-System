@@ -1,0 +1,19 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "Employee Tracker that is connected to mySQL database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joolyen/Employee-Management-System.git"
+  },
+  "author": "Julian Ivey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joolyen/Employee-Management-System/issues"
+  },
+  "homepage": "https://github.com/joolyen/Employee-Management-System#readme"
+}
