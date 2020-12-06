@@ -28,11 +28,11 @@ function search() {
             choices: [
                 "Add employee",
                 "Add department",
-                "Add position",
+                "Add role",
                 "View employees",
                 "View departments",
-                "View positions",
-                "Update employee position",
+                "View roles",
+                "Update employee role",
                 "Exit"
             ]
         })
@@ -46,8 +46,8 @@ function search() {
                     AddDepartment();
                     break;
 
-                case "Add position":
-                    AddPosition();
+                case "Add role":
+                    AddRole();
                     break;
 
                 case "View employees":
@@ -58,12 +58,12 @@ function search() {
                     ViewDepartments();
                     break;
 
-                case "View positions":
-                    ViewPositions();
+                case "View roles":
+                    Viewroles();
                     break;
 
-                case "Update employee position":
-                    UpdateEmployeePosition();
+                case "Update employee role":
+                    UpdateEmployeerole();
                     break;
 
                 case "Exit":
@@ -75,10 +75,10 @@ function search() {
 
 
 function AddEmployee() {
-    let query = "SELECT title FROM employeetracker_db.position";
+    let query = "SELECT title FROM employeetracker_db.role";
     connection.query(query, function (err, res) {
         if (err) throw err;
-        let positionArray = [];
+        let roleArray = [];
         inquirer
             .prompt([
 
@@ -96,12 +96,12 @@ function AddEmployee() {
                     type: "rawlist",
                     choices: function () {
                         for (let i = 0; i < res.length; i++) {
-                            positionArray.push(res[i].title);
+                            roleArray.push(res[i].title);
                         }
-                        return positionArray;
+                        return roleArray;
                     },
-                    message: "What is the employee's position?",
-                    name: "position",
+                    message: "What is the employee's role?",
+                    name: "role",
                 },
                 {
                     type: "input",
@@ -115,7 +115,7 @@ function AddEmployee() {
                     {
                         first_name: answer.firstname,
                         last_name: answer.lastname,
-                        position_id: positionArray.indexOf(answer.position) + 1,
+                        role_id: roleArray.indexOf(answer.role) + 1,
                         manager_id: answer.managerID
                     },
                     function (err) {
@@ -145,7 +145,7 @@ function AddDepartment() {
 }
 
 
-function AddPosition() {
+function AddRole() {
     let query = "SELECT name FROM employeetracker_db.department";
     connection.query(query, function (err, res) {
         if (err) throw err;
@@ -155,12 +155,12 @@ function AddPosition() {
             .prompt([
                 {
                     type: "input",
-                    message: "What's the name of the position?",
-                    name: "positionname"
+                    message: "What's the name of the role?",
+                    name: "rolename"
                 },
                 {
                     type: "input",
-                    message: "What is the salary for this position?",
+                    message: "What is the salary for this role?",
                     name: "salary"
                 },
                 {
@@ -171,15 +171,15 @@ function AddPosition() {
                         }
                         return deptArray;
                     },
-                    message: "What department would you like to add the new position to?",
+                    message: "What department would you like to add the new role to?",
                     name: "dept"
                 },
             ])
             .then(function (answer) {
-                let query = "INSERT INTO position SET?";
+                let query = "INSERT INTO role SET?";
                 connection.query(query,
                     {
-                        title: answer.positionname,
+                        title: answer.rolename,
                         salary: answer.salary,
                         department_id: deptArray.indexOf(answer.dept) + 1
                     },
@@ -193,8 +193,8 @@ function AddPosition() {
 
 
 function ViewEmployees() {
-    let query = "SELECT first_name AS FirstName , last_name as LastName , position.title as position, position.salary AS Salary, department.name AS Department"; 
-    query += " FROM employee INNER JOIN department ON department.id = employee.position_id left JOIN position ON position.id = employee.position_id";
+    let query = "SELECT first_name AS FirstName , last_name as LastName , role.title as role, role.salary AS Salary, department.name AS Department"; 
+    query += " FROM employee INNER JOIN department ON department.id = employee.role_id left JOIN role ON role.id = employee.role_id";
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
@@ -212,8 +212,8 @@ function ViewDepartments() {
     });
 }
 
-function ViewPositions() {
-    let query = "SELECT title AS position FROM position";
+function Viewroles() {
+    let query = "SELECT title AS role FROM role";
     connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
@@ -222,7 +222,7 @@ function ViewPositions() {
 
 }
 
-function UpdateEmployeePosition() {
+function UpdateEmployeerole() {
     inquirer
         .prompt([
             {
@@ -234,12 +234,12 @@ function UpdateEmployeePosition() {
             {
                 type: "input",
                 message: "What do you want to update to?",
-                name: "positionUpdate"
+                name: "roleUpdate"
             }
         ])
         .then(function (answer) {
-            let query = "UPDATE employee SET position_id=? WHERE first_name= ?";
-            connection.query(query, [answer.positionUpdate, answer.employeeUpdate], function (err, res) {
+            let query = "UPDATE employee SET role_id=? WHERE first_name= ?";
+            connection.query(query, [answer.roleUpdate, answer.employeeUpdate], function (err, res) {
                 if (err) throw err;
                 console.table(res);
                 search();
